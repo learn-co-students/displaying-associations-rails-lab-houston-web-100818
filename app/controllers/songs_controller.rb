@@ -1,5 +1,17 @@
 class SongsController < ApplicationController
+
+  before_action :define_current_song
+
+  def define_current_song
+    if params[:id]
+      @song = Song.find(params[:id])
+    else
+      @song = Song.new
+    end
+  end
+
   def index
+    @songs = Song.all
   end
 
   def show
@@ -44,7 +56,6 @@ class SongsController < ApplicationController
   private
 
   def song_params
-    params.require(:song).permit(:title)
+    params.require(:song).permit(:title, :artist_id)
   end
 end
-
